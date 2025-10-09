@@ -1,17 +1,23 @@
-"use client"
+"use client";
 
-import backgroundP from "@/assets/background-page.png"
-import { StatsCards } from "@/components/dashboard/card-stats"
-import { Header } from "@/components/dashboard/header"
-import { PeriodSelector } from "@/components/dashboard/period-selector"
-import Image from "next/image"
+import backgroundP from "@/assets/background-page.png";
+import { StatsCards } from "@/features/transaction/components/card-stats";
+import { Header } from "@/components/dashboard/header";
+import { PeriodSelector } from "@/components/dashboard/period-selector";
+import Image from "next/image";
+import Summary from "@/features/transaction/containers/summary";
 
 export default function DashboardPage() {
   return (
     <div className="relative min-h-screen">
       {/* Background */}
       <div className="absolute top-0 left-0 w-full h-[25vh] -z-10">
-        <Image src={backgroundP} alt="background" fill className="object-cover" />
+        <Image
+          src={backgroundP}
+          alt="background"
+          fill
+          className="object-cover"
+        />
       </div>
 
       <Header />
@@ -27,9 +33,9 @@ export default function DashboardPage() {
           </div>
           <PeriodSelector />
         </div>
-
-        <StatsCards />
+        {/* Stats Cards */}
+        <Summary />
       </main>
     </div>
-  )
+  );
 }
