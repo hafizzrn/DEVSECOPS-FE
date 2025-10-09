@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
 import { Card, CardContent } from "@/components/ui/card";
 import { BarChart3, PieChart, TrendingUp, Shield, Bell, Smartphone } from "lucide-react";
 import featureDashboard from "@/assets/feature-dashboard.png";

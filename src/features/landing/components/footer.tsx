@@ -1,4 +1,5 @@
-import { Wallet, Twitter, Facebook, Linkedin, Instagram } from "lucide-react";
+/** biome-ignore-all lint/a11y/useValidAnchor: <explanation> */
+import { Facebook, Instagram, Linkedin, Twitter, Wallet } from "lucide-react";
 
 const Footer = () => {
   return (

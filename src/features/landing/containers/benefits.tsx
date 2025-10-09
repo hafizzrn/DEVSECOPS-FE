@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle2, Target, LineChart, Clock } from "lucide-react";
+import { CheckCircle2, Clock, LineChart, Target } from "lucide-react";
 
 const benefits = [
   {
@@ -42,9 +42,9 @@ const Benefits = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {benefits.map((benefit, index) => (
+          {benefits.map((benefit) => (
             <Card 
-              key={index}
+              key={benefit.title}
               className="border-0 bg-card shadow-md hover:shadow-lg transition-all duration-300"
             >
               <CardContent className="p-8">
