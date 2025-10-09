@@ -1,12 +1,7 @@
-'use client'
+"use client";
 
-import { useState } from "react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -16,25 +11,34 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-import Image from "next/image";
-import background from "@/assets/background.png";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { signIn, type SignInResponse } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 const LoginSchema = z.object({
-  email: z.string().email("Email tidak valid").min(1, "Email tidak boleh kosong"),
+  email: z
+    .string()
+    .email("Email tidak valid")
+    .min(1, "Email tidak boleh kosong"),
   password: z.string().min(6, "Kata sandi harus memiliki minimal 6 karakter"),
 });
 
 type LoginRequest = z.infer<typeof LoginSchema>;
 
 export default function Login() {
-  let [isVisible, setIsVisible] = useState(false);
-
+  const [isVisible, setIsVisible] = useState(false);
+  const router = useRouter();
   function toggleVisibility() {
     setIsVisible((prevState) => !prevState);
   }
 
-  let form = useForm<LoginRequest>({
+  const form = useForm<LoginRequest>({
     defaultValues: {
       email: "",
       password: "",
@@ -42,18 +46,22 @@ export default function Login() {
     resolver: zodResolver(LoginSchema),
   });
 
-  function onSubmitHandler(data: LoginRequest) {
-    fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    }).then((res) => {
-      if (res.ok) {
-        console.log("Login berhasil");
+  async function onSubmitHandler(data: LoginRequest) {
+    try {
+      const res = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+
+      if (res?.ok) {
+        toast.success("Berhasil masuk!");
+        router.push("/dashboard");
       } else {
-        console.log("Login gagal");
+        throw res;
       }
-    });
+    } catch (error) {
+      toast.error((error as SignInResponse).error);
+    }
   }
 
   return (
@@ -144,12 +152,16 @@ export default function Login() {
           </Button>
         </form>
       </Form>
-      <p className="text-center text-sm text-[#667085]"> Belum punya akun?{" "}
-        <Link href="/auth/register" className="text-[#1E96B7] font-semibold hover:underline">
+      <p className="text-center text-sm text-[#667085]">
+        {" "}
+        Belum punya akun?{" "}
+        <Link
+          href="/auth/register"
+          className="text-[#1E96B7] font-semibold hover:underline"
+        >
           Daftar
         </Link>
       </p>
     </Card>
-
   );
 }

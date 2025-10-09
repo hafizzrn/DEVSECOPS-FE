@@ -1,10 +1,10 @@
 "use client"
 
-import Image from "next/image"
-import { Header } from "@/components/dashboard/header"
-import { StatsCards } from "@/components/dashboard/card-stats"
-import { PeriodSelector } from "@/components/dashboard/period-selector"
 import backgroundP from "@/assets/background-page.png"
+import { StatsCards } from "@/components/dashboard/card-stats"
+import { Header } from "@/components/dashboard/header"
+import { PeriodSelector } from "@/components/dashboard/period-selector"
+import Image from "next/image"
 
 export default function DashboardPage() {
   return (
