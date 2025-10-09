@@ -58,7 +58,6 @@ export default function Login() {
   }
 
   return (
-    <section className="h-screen w-screen relative flex items-center justify-center overflow-hidden">
       <Card className="z-10 mx-auto w-full max-w-md flex flex-col items-center justify-center gap-y-12 px-6 pt-6 pb-10">
         <Form {...form}>
           <form
@@ -173,12 +172,6 @@ export default function Login() {
 		</p>
       </Card>
 
-      <Image
-        src={background}
-        alt="background"
-        fill
-        className="object-cover -z-10 fixed inset-0"
-      />
-    </section>
+      
   );
 }
