@@ -6,6 +6,7 @@ import { Header } from "@/components/dashboard/header";
 import { PeriodSelector } from "@/components/dashboard/period-selector";
 import Image from "next/image";
 import Summary from "@/features/transaction/containers/summary";
+import DashboardTable from "@/components/dashboard/dashboard-table";
 
 export default function DashboardPage() {
   return (
@@ -33,8 +34,13 @@ export default function DashboardPage() {
           </div>
           <PeriodSelector />
         </div>
-        {/* Stats Cards */}
         <Summary />
+        <div className="mt-8 ">
+          <p className="text-md font-semibold text-black mt-4 mb-4 text-wh">
+              Tabel Pengeluaran
+          </p>
+          <DashboardTable/>
+        </div>
       </main>
     </div>
   );

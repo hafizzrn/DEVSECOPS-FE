@@ -46,44 +46,23 @@ export default function ProfilePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
               {/* Left Section */}
-              <div className="md:col-span-1 self-start">
-                <div className="rounded-xl border bg-card overflow-hidden">
-                  <div className="relative aspect-[4/3] bg-gradient-to-br from-muted to-card">
-                    <Image
-                      src="/profile-cover.jpg"
-                      alt="Cover"
-                      fill
-                      className="object-cover"
-                    />
-                    <button
-                      type="button"
-                      className="absolute top-2 right-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-background/90 shadow border"
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </button>
-
-                    <div className="absolute -bottom-8 left-6">
-                      <Avatar className="h-20 w-20 ring-4 ring-background">
-                        <AvatarImage src="/diverse-avatars.png" alt="Avatar" />
-                        <AvatarFallback>AD</AvatarFallback>
-                      </Avatar>
+              <div className="pt-6">
+                  <h3 className="text-lg font-semibold mb-4">Batas Pengeluaran</h3>
+                  <div className="grid grid-cols-1 gap-4">
+                    <div className="space-y-1">
+                      <Label>Limit Harian</Label>
+                      <Input type="number" placeholder="Rp 500.000" className="h-12" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label>Limit Bulanan</Label>
+                      <Input type="number" placeholder="Rp 5.000.000" className="h-12" />
+                    </div>
+                    <div className="space-y-1">
+                      <Label>Limit Tahunan</Label>
+                      <Input type="number" placeholder="Rp 60.000.000" className="h-12" />
                     </div>
                   </div>
-
-                  <div className="pt-10 pb-4 px-6 text-center">
-                    <div className="font-semibold">Admin</div>
-                    <div className="text-sm text-muted-foreground">Admin#123</div>
-                  </div>
                 </div>
-
-                <Button
-                  variant="outline"
-                  className="mt-4 w-full border-destructive text-destructive hover:bg-destructive/5 bg-transparent"
-                >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Hapus gambar
-                </Button>
-              </div>
 
               {/* Right Section */}
               <form className="md:col-span-2 grid grid-cols-1 gap-4">
@@ -120,25 +99,6 @@ export default function ProfilePage() {
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
-                  </div>
-                </div>
-
-
-                <div className="pt-6">
-                  <h3 className="text-lg font-semibold mb-4">Batas Pengeluaran</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="space-y-1">
-                      <Label>Limit Harian</Label>
-                      <Input type="number" placeholder="Rp 500.000" className="h-12" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label>Limit Bulanan</Label>
-                      <Input type="number" placeholder="Rp 5.000.000" className="h-12" />
-                    </div>
-                    <div className="space-y-1">
-                      <Label>Limit Tahunan</Label>
-                      <Input type="number" placeholder="Rp 60.000.000" className="h-12" />
-                    </div>
                   </div>
                 </div>
 
