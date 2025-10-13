@@ -1,11 +1,12 @@
 "use client";
 
 import backgroundP from "@/assets/background-page.png";
-import { StatsCards } from "@/features/transaction/components/card-stats";
 import { Header } from "@/components/dashboard/header";
-import { PeriodSelector } from "@/components/dashboard/period-selector";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
 import Summary from "@/features/transaction/containers/summary";
+import TransactionDashboard from "@/features/transaction/containers/all-transaction";
+import Image from "next/image";
+import Link from "next/link";
 import DashboardTable from "@/components/dashboard/dashboard-table";
 
 export default function DashboardPage() {
@@ -32,7 +33,9 @@ export default function DashboardPage() {
               Ringkasan performa dan aktivitas terkini
             </p>
           </div>
-          <PeriodSelector />
+          <Link href="/dashboard/transaction/create">
+            <Button>Tambahkan Transaksi</Button>
+          </Link>
         </div>
         <Summary />
         <div className="mt-8 ">
@@ -41,6 +44,7 @@ export default function DashboardPage() {
           </p>
           <DashboardTable/>
         </div>
+        <TransactionDashboard />
       </main>
     </div>
   );

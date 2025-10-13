@@ -1,0 +1,38 @@
+"use client"
+import { Pagination } from '@/components/ui/pagination';
+import TransactionTable from '../components/transaction-table';
+import { useGetTransactions } from '../services/transaction-service';
+import FilterTransaction from './filter-transaction';
+import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+
+export default function AllTransaction() {
+    const searchParams = useSearchParams();
+    const [filters, setFilters] = useState({
+        type: searchParams.get("type") || "",
+        period: searchParams.get("period") || "",
+        sort_by: searchParams.get("sort_by") || "date",
+        order_by: searchParams.get("order_by") || "desc",
+        page: Number(searchParams.get("page") || 1),
+        limit: Number(searchParams.get("limit") || 10),
+        start_date: searchParams.get("start_date") || "",
+        end_date: searchParams.get("end_date") || "",
+    })
+    const queryParams = {
+        ...filters,
+    };
+
+    const queryKey = [
+        "transactions",
+        new URLSearchParams(queryParams as unknown as Record<string, string>).toString(),
+    ];
+
+    const { data: transactions, isLoading } = useGetTransactions(queryKey);
+    return (
+        <section>
+            <FilterTransaction />
+            <TransactionTable transactions={transactions?.data.data ?? []} isLoading={isLoading} />
+            <Pagination />
+        </section>
+    )
+}
