@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CASHFLOW FE
 
-## Getting Started
 
-First, run the development server:
+## Prasyarat
 
+Pastikan Anda telah menginstal:
+- [Node.js](https://nodejs.org/) (versi 18 atau lebih tinggi)
+- [pnpm](https://pnpm.io/) (versi 8 atau lebih tinggi)
+- [Docker](https://www.docker.com/) dan Docker Compose (untuk deployment)
+
+## Instalasi pnpm
+
+Jika belum menginstal pnpm, jalankan:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install -g pnpm
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup Projek Lokal
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Clone Repository
+```bash
+git clone https://github.com/hafizzrn/DEVSECOPS-FE
+cd DEVSECOPS-FE
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Install Dependencies
+```bash
+pnpm install
+```
 
-## Learn More
+### 3. Setup Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+Salin file `.env.example` menjadi `.env`:
+```bash
+cp .env.example .env
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Kemudian edit file `.env` dan sesuaikan nilai-nilai konfigurasi sesuai kebutuhan Anda:
+```bash
+nano .env
+# atau gunakan editor favorit Anda
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Jalankan Development Server
+```bash
+pnpm dev
+```
 
-## Deploy on Vercel
+Aplikasi akan berjalan di [http://localhost:3000](http://localhost:3000)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Perintah Lainnya
+```bash
+# Build untuk production
+pnpm build
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Jalankan production build
+pnpm start
+
+# Linting
+pnpm lint
+
+# Format code
+pnpm format
+```
+
+## Deployment dengan Docker
+
+### Prasyarat Deployment
+
+Pastikan Anda telah:
+1. Menginstal Docker dan Docker Compose
+2. Menyiapkan file `.env` dengan konfigurasi production
+3. Membuild image atau memiliki akses ke image registry
+
+### Cara Deploy
+
+#### 1. Persiapan File Environment
+
+Pastikan file `.env` sudah dikonfigurasi dengan benar untuk production:
+```bash
+cp .env.example .env
+# Edit .env dengan konfigurasi production
+```
+
+#### 2. Build dan Jalankan Container
+
+Jalankan perintah berikut untuk memulai deployment:
+```bash
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+**Penjelasan flag:**
+- `-f docker-compose.prod.yml`: Menggunakan file konfigurasi production
+- `up`: Membuat dan menjalankan container
+- `-d`: Menjalankan container di background (detached mode)
+
+#### 3. Melihat Log Container
+
+Untuk melihat log aplikasi:
+```bash
+docker-compose -f docker-compose.prod.yml logs -f
+```
+
+#### 4. Menghentikan Container
+
+Untuk menghentikan aplikasi:
+```bash
+docker-compose -f docker-compose.prod.yml down
+```
+
+#### 5. Rebuild dan Restart
+
+Jika ada perubahan code atau konfigurasi:
+```bash
+# Stop container
+docker-compose -f docker-compose.prod.yml down
+
+# Rebuild image
+docker-compose -f docker-compose.prod.yml build
+
+# Start ulang
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+## Troubleshooting
+
+### Port sudah digunakan
+Jika port 3000 sudah digunakan, ubah port di file `docker-compose.prod.yml` atau `.env`
+
