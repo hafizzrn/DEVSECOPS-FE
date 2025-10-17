@@ -41,7 +41,7 @@ export function Header() {
             </Button>
 
             <Button
-              onClick={() => router.push("/transaction")}
+              onClick={() => router.push("/dashboard/transaction")}
               variant={pathname === "/transaction" ? "default" : "ghost"}
               size="default"
               className={`rounded-full gap-2 px-6 py-4 text-sm font-medium ${pathname === "/transaction" ? "bg-foreground text-background hover:bg-foreground/90" : "text-foreground/80 hover:bg-muted"}`}
@@ -51,7 +51,7 @@ export function Header() {
             </Button>
 
             <Button
-              onClick={() => router.push("/profile")}
+              onClick={() => router.push("/dashboard/profile")}
               variant={pathname === "/profile" ? "default" : "ghost"}
               size="default"
               className={`rounded-full gap-2 px-6 py-2 text-sm font-medium ${pathname === "/profile" ? "bg-foreground text-background hover:bg-foreground/90" : "text-foreground/80 hover:bg-muted"}`}

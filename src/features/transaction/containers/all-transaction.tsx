@@ -1,10 +1,10 @@
 "use client";
-import { Pagination } from "@/components/ui/pagination";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, useMemo } from "react";
 import TransactionTable from "../components/transaction-table";
 import { useGetTransactions } from "../services/transaction-service";
 import FilterTransaction from "./filter-transaction";
+import { Pagination } from "../components/pagination";
 
 export default function AllTransaction() {
     const searchParams = useSearchParams();
@@ -45,13 +45,26 @@ export default function AllTransaction() {
     const { data: transactions, isLoading } = useGetTransactions(queryKey);
 
     return (
-        <section className="container py-10 md:py-20">
+        <section className="container flex flex-col gap-8 py-10 md:py-20 items-stretch">
             <FilterTransaction />
             <TransactionTable
                 transactions={transactions?.data.data ?? []}
                 isLoading={isLoading}
             />
-            <Pagination />
+            <div className="">
+                <Pagination
+                    currentPage={transactions?.data.current_page ?? 1}
+                    totalPages={transactions?.data.total_page ?? 1}
+                    onPageChange={(page) => {
+                        setFilters((prev) => ({ ...prev, page }));
+                        const newSearchParams = new URLSearchParams(searchParams);
+                        newSearchParams.set("page", page.toString());
+                        window.history.replaceState(null, "", `?${newSearchParams.toString()}`);
+                    }}
+                />
+            </div>
+
+
         </section>
     );
 }
