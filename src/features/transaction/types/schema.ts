@@ -14,7 +14,8 @@ export const createTransactionFormSchema = z.object({
         .any()
         .refine((file) => file instanceof File || file?.length > 0, {
             message: 'Proof file is required',
-        }),
+        })
+        .optional(),
 });
 
 

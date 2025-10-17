@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Upload, DollarSign } from "lucide-react";
@@ -33,7 +33,7 @@ import {
 import { toast } from "sonner";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { createTransactionFormSchema, type TransactionFormValues } from "../types/schema";
-import { useCreateTransaction, useGetTransactionById } from "../services/transaction-service";
+import { useCreateTransaction, useGetTransactionById, useUpdateTransaction } from "../services/transaction-service";
 import { handleApiError } from "@/lib/error";
 import { useRouter } from "next/navigation";
 import { useGetCategories } from "@/features/category/service/category-service";
@@ -57,14 +57,32 @@ export default function TransactionForm({ id }: { id?: string }) {
         },
     });
 
+    useEffect(() => {
+        if (transaction?.data) {
+            form.reset({
+                transaction_type: transaction.data.transaction_type || "expense",
+                amount: String(transaction.data.amount) || "",
+                category_id: transaction.data.category_id || "",
+                note: transaction.data.note || "",
+                period: transaction.data.period || "monthly",
+                date: new Date(transaction.data.date), // pastikan ini ada
+                proof_file: undefined,
+            });
+        }
+    }, [transaction, form]);
+
+
     const transactionType = form.watch("transaction_type");
 
     const { mutateAsync: createTransaction } = useCreateTransaction();
+    const { mutateAsync: updateTransaction } = useUpdateTransaction(id || "");
+
     const { data: categories, isLoading } = useGetCategories();
     const router = useRouter();
     const onSubmit = async (data: TransactionFormValues) => {
 
         try {
+
             const formData = new FormData();
             formData.append("transactionType", data.transaction_type);
             formData.append("amount", data.amount);
@@ -78,8 +96,13 @@ export default function TransactionForm({ id }: { id?: string }) {
                 formData.append("proofFile", data.proof_file);
                 setSelectedFile(data.proof_file);
             }
-            await createTransaction(formData);
-            toast.success("Transaction created successfully");
+            if (id) {
+                await updateTransaction(formData);
+                toast.success("Transaction updated successfully");
+            } else {
+                await createTransaction(formData);
+                toast.success("Transaction created successfully");
+            }
             form.reset();
             router.push("/dashboard/transaction");
             setSelectedFile(null);
