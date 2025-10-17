@@ -31,8 +31,8 @@ export default function FilterTransaction() {
     searchParams.get("end_date") ? new Date(searchParams.get("end_date")!) : undefined
   )
   const [filters, setFilters] = useState({
-    type: searchParams.get("type") || "all",
-    period: searchParams.get("period") || "all",
+    type: searchParams.get("type") || "",
+    period: searchParams.get("period") || "",
     sort_by: searchParams.get("sort_by") || "date",
     order_by: searchParams.get("order_by") || "desc",
   })
@@ -84,11 +84,10 @@ export default function FilterTransaction() {
             value={filters.type}
             onValueChange={(value) => handleFilterChange("type", value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Transaction Type" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Types</SelectItem>
+            <SelectContent className="w-full ">
               <SelectItem value="income">Income</SelectItem>
               <SelectItem value="expense">Expense</SelectItem>
             </SelectContent>
@@ -99,14 +98,13 @@ export default function FilterTransaction() {
             value={filters.period}
             onValueChange={(value) => handleFilterChange("period", value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Period" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Periods</SelectItem>
-              <SelectItem value="2025-01">January 2025</SelectItem>
-              <SelectItem value="2024-12">December 2024</SelectItem>
-              <SelectItem value="2024-11">November 2024</SelectItem>
+            <SelectContent className="w-full">
+              <SelectItem value="daily">Daily</SelectItem>
+              <SelectItem value="monthly">Monthly</SelectItem>
+              <SelectItem value="yearly">Yearly</SelectItem>
             </SelectContent>
           </Select>
 
@@ -115,10 +113,10 @@ export default function FilterTransaction() {
             value={filters.sort_by}
             onValueChange={(value) => handleFilterChange("sort_by", value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Sort By" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="w-full">
               <SelectItem value="date">Date</SelectItem>
               <SelectItem value="amount">Amount</SelectItem>
               <SelectItem value="type">Type</SelectItem>

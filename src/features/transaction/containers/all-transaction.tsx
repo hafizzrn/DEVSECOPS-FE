@@ -1,10 +1,10 @@
 "use client"
 import { Pagination } from '@/components/ui/pagination';
+import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 import TransactionTable from '../components/transaction-table';
 import { useGetTransactions } from '../services/transaction-service';
 import FilterTransaction from './filter-transaction';
-import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
 
 export default function AllTransaction() {
     const searchParams = useSearchParams();
@@ -29,7 +29,7 @@ export default function AllTransaction() {
 
     const { data: transactions, isLoading } = useGetTransactions(queryKey);
     return (
-        <section>
+        <section className='container py-10 md:py-20'>
             <FilterTransaction />
             <TransactionTable transactions={transactions?.data.data ?? []} isLoading={isLoading} />
             <Pagination />

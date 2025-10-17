@@ -1,6 +1,5 @@
-import React from 'react'
-import { useGetRecentTransactions, useGetTransactions } from '../services/transaction-service';
 import TransactionTable from '../components/transaction-table';
+import { useGetRecentTransactions } from '../services/transaction-service';
 
 export default function TransactionDashboard() {
     const { data: transactions, isLoading } = useGetRecentTransactions(["transaction"]);
