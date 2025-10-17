@@ -27,6 +27,13 @@ export function useCreateTransaction() {
   });
 }
 
+export function useUpdateTransaction(id: string) {
+  return useMutationApi<ApiResponse<null>, FormData>({
+    method: "put",
+    url: `/transactions/${id}`,
+  });
+}
+
 
 export function useGetTransactionById(id:string) {
   return useQueryApi<ApiResponse<Transaction>>(
