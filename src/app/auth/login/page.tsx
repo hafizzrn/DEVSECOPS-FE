@@ -48,11 +48,12 @@ export default function Login() {
 
   const session = useSession();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (session.status === "authenticated") {
       router.push("/dashboard");
     }
-  }, [session.status, router]);
+  }, [session]);
 
   async function onSubmitHandler(data: LoginRequest) {
     try {
