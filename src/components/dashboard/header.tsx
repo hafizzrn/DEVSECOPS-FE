@@ -1,10 +1,11 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
-import { CreditCard, LayoutDashboard, User } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import logo from "@/assets/logo.png";
+import { Button } from "@/components/ui/button";
+import { CreditCard, LayoutDashboard, User } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export function Header() {
   const router = useRouter();
@@ -12,10 +13,10 @@ export function Header() {
 
   return (
     <header className="bg-white border-border">
-      <div className="container mx-auto px-4">
+      <div className="container px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => router.push("/dashboard")}>
+          <Link className="flex items-center gap-3 cursor-pointer" href="/dashboard">
             <Image
               src={logo}
               alt="Cashflow Logo"
@@ -23,7 +24,7 @@ export function Header() {
               height={40}
             />
             <h2 className="font-bold text-foreground text-sm tracking-wide">CASHFLOW</h2>
-          </div>
+          </Link>
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center gap-2 rounded-full py-3">
