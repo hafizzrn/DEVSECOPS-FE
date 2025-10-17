@@ -19,7 +19,7 @@ export function useGetRecentTransactions(queryKey: string[]) {
 
   return useQueryApi<ApiResponse<TransactionWithPagination>>(
     queryKey,
-    `/transactions?limit=5&sort_by=date&order_by=desc&start_date=${dateToday}&end_date=${dateToday}`,
+    `/transactions?limit=10&sort_by=updated_at&order_by=desc&start_date=${dateToday}&end_date=${dateToday}`,
   );
 }
 
