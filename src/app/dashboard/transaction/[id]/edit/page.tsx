@@ -1,8 +1,8 @@
 import TransactionForm from '@/features/transaction/containers/transaction-form'
 import React from 'react'
 
-export default function EditTransactionPage({ params }: { params: { id: string } }) {
+export default async function EditTransactionPage({ params }: { params: Promise<{ id: string }> }) {
     return (
-        <TransactionForm id={params.id} />
+        <TransactionForm id={(await params).id} />
     )
 }

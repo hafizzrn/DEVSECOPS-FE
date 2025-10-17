@@ -1,8 +1,8 @@
 import TransactionDetail from '@/features/transaction/containers/transaction-detail'
 import React from 'react'
 
-export default function TransactionDetailPage({params}: {params: {id: string}}) {
+export default async function TransactionDetailPage({ params }: { params: Promise<{ id: string }> }) {
   return (
-    <TransactionDetail id={params.id}/>
+    <TransactionDetail id={(await params).id} />
   )
 }
