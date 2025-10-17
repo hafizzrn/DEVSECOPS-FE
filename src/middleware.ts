@@ -6,6 +6,6 @@ export function mainMiddleware() {
 }
 
 export default protectedRoutes(mainMiddleware, [
-    "/jljkljlkjlk",
-    "/lalapanbulaos/*",
+    "/dashboard",
+    "/dashboard/*",
 ]);
