@@ -145,7 +145,7 @@ export default function TransactionForm({ id }: { id?: string }) {
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Transaction Type</FormLabel>
-                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <Select onValueChange={field.onChange} value={field.value}>
                                                 <FormControl>
                                                     <SelectTrigger className="h-11">
                                                         <SelectValue placeholder="Select type" />
@@ -160,6 +160,7 @@ export default function TransactionForm({ id }: { id?: string }) {
                                         </FormItem>
                                     )}
                                 />
+
 
                                 <FormField
                                     control={form.control}
