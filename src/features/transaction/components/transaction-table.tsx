@@ -1,14 +1,15 @@
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { formatRupiah } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
-import { TrendingDown, TrendingUp } from 'lucide-react'
+import { EllipsisVertical, TrendingDown, TrendingUp } from 'lucide-react'
 import React from 'react'
-import { Transaction } from '../types'
+import type { Transaction } from '../types'
 import { Skeleton } from '@/components/ui/skeleton'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import Link from 'next/link'
 
 export default function TransactionTable({ transactions, isLoading }: { transactions: Transaction[]; isLoading: boolean }) {
 
@@ -26,7 +27,9 @@ export default function TransactionTable({ transactions, isLoading }: { transact
                                 <TableHead>Type</TableHead>
                                 <TableHead>Note</TableHead>
                                 <TableHead>Period</TableHead>
-                                <TableHead className="text-right">Amount</TableHead>
+                                <TableHead>Amount</TableHead>
+                                <TableHead>Proof file</TableHead>
+                                <TableHead className='text-right'>Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -49,11 +52,17 @@ export default function TransactionTable({ transactions, isLoading }: { transact
                                         <TableCell className="text-right">
                                             <Skeleton className="h-4 w-24 bg-gray-200 rounded animate-pulse ml-auto" />
                                         </TableCell>
+                                        <TableCell className="text-right">
+                                            <Skeleton className="h-4 w-24 bg-gray-200 rounded animate-pulse ml-auto" />
+                                        </TableCell>
+                                        <TableCell className="text-right">
+                                            <Skeleton className="h-4 w-24 bg-gray-200 rounded animate-pulse ml-auto" />
+                                        </TableCell>
                                     </TableRow>
                                 ))
                             ) : transactions.length === 0 ? (
                                 <TableRow>
-                                    <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                                    <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
                                         No transactions found
                                     </TableCell>
                                 </TableRow>
@@ -80,9 +89,17 @@ export default function TransactionTable({ transactions, isLoading }: { transact
                                                 {transaction.transaction_type}
                                             </Badge>
                                         </TableCell>
-                                        <TableCell className="max-w-xs truncate">{transaction.note}</TableCell>
+                                        <TableCell className="max-w-xs truncate">
+                                            
+                                           {/** biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
+                                            <div dangerouslySetInnerHTML={{
+                                            __html: transaction.note || '',
+
+                                           }}/>
+                                            
+                                            </TableCell>
                                         <TableCell>{transaction.period}</TableCell>
-                                        <TableCell
+                                        {/* <TableCell
                                             className={cn(
                                                 "text-right font-semibold",
                                                 transaction.transaction_type === "income" ? "text-success" : "text-destructive"
@@ -90,6 +107,46 @@ export default function TransactionTable({ transactions, isLoading }: { transact
                                         >
                                             {transaction.transaction_type === "income" ? "+" : "-"}
                                             {formatRupiah(transaction.amount)}
+                                        </TableCell> */}
+                                        <TableCell
+                                            className={cn(
+                                                "font-semibold",
+                                                transaction.transaction_type === "income" ? "text-success" : "text-destructive"
+                                            )}
+                                        >
+                                            {transaction.transaction_type === "income" ? "+" : "-"}
+                                            {formatRupiah(transaction.amount)}
+                                        </TableCell>
+                                        <TableCell>
+                                            {transaction.proof_file ? (
+                                                <a href={transaction.proof_file} target="_blank" rel="noopener noreferrer">
+                                                    View Proof
+                                                </a>
+                                            ) : (
+                                                "No Proof"
+                                            )}
+                                        </TableCell>
+                                        <TableCell className="flex justify-end self-end text-right">
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger asChild>
+                                                    <EllipsisVertical className="h-5 w-5 cursor-pointer text-muted-foreground hover:text-foreground text-right" />
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent>
+                                                    <Link href={`/dashboard/transaction/${transaction.id}`}>
+                                                        <DropdownMenuItem>
+                                                            View
+                                                        </DropdownMenuItem>
+                                                    </Link>
+                                                    <Link href={`/dashboard/transaction/${transaction.id}/edit`}>
+                                                        <DropdownMenuItem>
+                                                            Edit
+                                                        </DropdownMenuItem>
+                                                    </Link>
+                                                    <DropdownMenuItem>
+                                                        Delete
+                                                    </DropdownMenuItem>
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
                                         </TableCell>
                                     </TableRow>
                                 ))

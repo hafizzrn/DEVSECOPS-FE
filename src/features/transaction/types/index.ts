@@ -22,6 +22,8 @@ export interface Transaction {
   image_url?: string;
   created_at: string;
   updated_at: string;
+  proof_file?: string;
+  category_id: string;
   period: "daily" | "monthly" | "yearly";
 }
 
