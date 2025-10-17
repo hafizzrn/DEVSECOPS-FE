@@ -54,6 +54,8 @@ export default function TransactionForm({ id }: { id?: string }) {
             note: id ? transaction?.data.note || "" : "",
             period: id ? transaction?.data.period || "monthly" : "monthly",
             proof_file: undefined,
+            date: new Date(),
+
         },
     });
 
@@ -259,7 +261,7 @@ export default function TransactionForm({ id }: { id?: string }) {
                                                                 !field.value && "text-muted-foreground"
                                                             )}
                                                         >
-                                                            {field.value ? (
+                                                            {field.value && field.value instanceof Date && !isNaN(field.value.getTime()) ? (
                                                                 format(field.value, "PPP")
                                                             ) : (
                                                                 <span>Pick a date</span>

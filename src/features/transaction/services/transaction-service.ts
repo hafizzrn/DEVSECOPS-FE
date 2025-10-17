@@ -39,6 +39,10 @@ export function useGetTransactionById(id: string) {
   return useQueryApi<ApiResponse<Transaction>>(
     ["transaction", id],
     `/transactions/${id}`,
+    {
+      enabled: !!id,
+      queryKey: ["transaction", id],
+    }
   );
 }
 
@@ -55,6 +59,6 @@ export function useDeleteTransaction(id: string) {
       method: "delete",
       url: `/transactions/${id}`
     }
-    
+
   );
 }

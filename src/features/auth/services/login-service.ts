@@ -1,7 +1,7 @@
 import { api } from "@/lib/axios";
 import { decodeJwt } from "@/lib/decode";
 import { BASE_URL } from "@/lib/env";
-import axios, { AxiosError } from "axios";
+import axios, { type AxiosError } from "axios";
 
 export async function login(
   credentials: Record<"email" | "password", string> | undefined,
