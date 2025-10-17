@@ -13,12 +13,16 @@ export function useGetTransactions(queryKey: string[]) {
 }
 
 export function useGetRecentTransactions(queryKey: string[]) {
-  const dateToday = new Date().toISOString().split("T")[0];
+  const dateToday = new Date().toLocaleDateString("en-CA", {
+    timeZone: "Asia/Jakarta",
+  }); 
+
   return useQueryApi<ApiResponse<TransactionWithPagination>>(
     queryKey,
     `/transactions?limit=5&sort_by=date&order_by=desc&start_date=${dateToday}&end_date=${dateToday}`,
   );
 }
+
 
 export function useCreateTransaction() {
   return useMutationApi<ApiResponse<null>, FormData>({
