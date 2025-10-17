@@ -13,10 +13,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
-import { signIn, type SignInResponse } from "next-auth/react";
+import { signIn, useSession, type SignInResponse } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -45,6 +45,14 @@ export default function Login() {
     },
     resolver: zodResolver(LoginSchema),
   });
+
+  const session = useSession();
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [session.status, router]);
 
   async function onSubmitHandler(data: LoginRequest) {
     try {
