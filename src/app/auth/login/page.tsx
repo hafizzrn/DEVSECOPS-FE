@@ -57,11 +57,10 @@ export default function Login() {
 
   async function onSubmitHandler(data: LoginRequest) {
     try {
-      const res = await signIn("credentials",  {
+      const res = await signIn("credentials", {
         ...data,
-        redirect: true,
+        redirect: false,
         callbackUrl: "/dashboard",
-
       });
 
       if (res?.ok) {
