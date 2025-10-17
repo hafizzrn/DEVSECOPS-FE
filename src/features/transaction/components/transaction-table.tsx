@@ -5,14 +5,33 @@ import { formatRupiah } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
 import { EllipsisVertical, TrendingDown, TrendingUp } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
 import type { Transaction } from '../types'
 import { Skeleton } from '@/components/ui/skeleton'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import Link from 'next/link'
+import { useDeleteTransaction } from '../services/transaction-service'
+import { toast } from 'sonner'
+import { handleApiError } from '@/lib/error'
+import { useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 
 export default function TransactionTable({ transactions, isLoading }: { transactions: Transaction[]; isLoading: boolean }) {
-
+    const [id, setId] = useState("")
+    const { mutateAsync: deleteTransactionMutation } = useDeleteTransaction(id)
+    const queryClient = useQueryClient()
+    const router = useRouter()
+    const deleteTransaction = async (id: string) => {
+        setId(id)
+        try {
+            await deleteTransactionMutation(null)
+            queryClient.invalidateQueries({ queryKey: ["transactions"] })
+            toast.success("Berhasil Menghapus")
+            router.refresh()
+        } catch (error) {
+            toast.error(handleApiError(error))
+        }
+    }
     return (
         <Card className="animate-scale-in" >
             <CardHeader>
@@ -90,14 +109,14 @@ export default function TransactionTable({ transactions, isLoading }: { transact
                                             </Badge>
                                         </TableCell>
                                         <TableCell className="max-w-xs truncate">
-                                            
-                                           {/** biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
-                                            <div dangerouslySetInnerHTML={{
-                                            __html: transaction.note || '',
 
-                                           }}/>
-                                            
-                                            </TableCell>
+                                            {/** biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
+                                            <div dangerouslySetInnerHTML={{
+                                                __html: transaction.note || '',
+
+                                            }} />
+
+                                        </TableCell>
                                         <TableCell>{transaction.period}</TableCell>
                                         {/* <TableCell
                                             className={cn(
@@ -142,7 +161,7 @@ export default function TransactionTable({ transactions, isLoading }: { transact
                                                             Edit
                                                         </DropdownMenuItem>
                                                     </Link>
-                                                    <DropdownMenuItem>
+                                                    <DropdownMenuItem onClick={() => deleteTransaction(transaction.id)}>
                                                         Delete
                                                     </DropdownMenuItem>
                                                 </DropdownMenuContent>

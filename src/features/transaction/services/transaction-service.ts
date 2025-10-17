@@ -35,16 +35,26 @@ export function useUpdateTransaction(id: string) {
 }
 
 
-export function useGetTransactionById(id:string) {
+export function useGetTransactionById(id: string) {
   return useQueryApi<ApiResponse<Transaction>>(
     ["transaction", id],
     `/transactions/${id}`,
   );
 }
 
-export function useGetImage(id:string) {
-  return useQueryApi<ApiResponse<{image_url: string}>>(
+export function useGetImage(id: string) {
+  return useQueryApi<ApiResponse<{ image_url: string }>>(
     ["transaction-image", id],
     `/transactions/${id}/proof`,
+  );
+}
+
+export function useDeleteTransaction(id: string) {
+  return useMutationApi<ApiResponse<null>, null>(
+    {
+      method: "delete",
+      url: `/transactions/${id}`
+    }
+    
   );
 }
