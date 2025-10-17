@@ -146,6 +146,19 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+    /* Responsive padding (px) */
+  --container-padding-sm: 8px;
+  --container-padding-md: 12px;
+  --container-padding-lg: 20px;
+  --container-padding-xl: 30px;
+  --container-padding-2xl: 40px;
+
+  /* Max-widths */
+  --container-max-width-sm: 640px;
+  --container-max-width-md: 768px;
+  --container-max-width-lg: 1024px;
+  --container-max-width-xl: 1280px;
+  --container-max-width-2xl: 1536px;
 }
 
 @layer utilities {
@@ -174,5 +187,43 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--container-padding-sm);
+    padding-right: var(--container-padding-sm);
+
+    @media (min-width: 640px) {
+      max-width: var(--container-max-width-sm);
+      padding-left: var(--container-padding-sm);
+      padding-right: var(--container-padding-sm);
+    }
+
+    @media (min-width: 768px) {
+      max-width: var(--container-max-width-md);
+      padding-left: var(--container-padding-md);
+      padding-right: var(--container-padding-md);
+    }
+
+    @media (min-width: 1024px) {
+      max-width: var(--container-max-width-lg);
+      padding-left: var(--container-padding-lg);
+      padding-right: var(--container-padding-lg);
+    }
+
+    @media (min-width: 1280px) {
+      max-width: var(--container-max-width-xl);
+      padding-left: var(--container-padding-xl);
+      padding-right: var(--container-padding-xl);
+    }
+
+    @media (min-width: 1536px) {
+      max-width: var(--container-max-width-2xl);
+      padding-left: var(--container-padding-2xl);
+      padding-right: var(--container-padding-2xl);
+    }
   }
 }
