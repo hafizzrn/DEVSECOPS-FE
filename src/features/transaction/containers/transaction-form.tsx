@@ -360,7 +360,7 @@ export default function TransactionForm({ id }: { id?: string }) {
                                     size="lg"
                                     className="w-full"
                                 >
-                                    Create Transaction
+                                    {id ? "Update Transaction" : "Create Transaction"}
                                 </Button>
                             </form>
                         </Form>
