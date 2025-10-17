@@ -4,10 +4,9 @@ import backgroundP from "@/assets/background-page.png";
 import { Header } from "@/components/dashboard/header";
 import { Button } from "@/components/ui/button";
 import Summary from "@/features/transaction/containers/summary";
-import TransactionDashboard from "@/features/transaction/containers/all-transaction";
+import TransactionDashboard from "@/features/transaction/containers/transaction-dashboard";
 import Image from "next/image";
 import Link from "next/link";
-import DashboardTable from "@/components/dashboard/dashboard-table";
 
 export default function DashboardPage() {
   return (
@@ -22,7 +21,6 @@ export default function DashboardPage() {
         />
       </div>
 
-      <Header />
 
       <main className="container mx-auto px-4 py-12">
         {/* Header Section */}
@@ -38,12 +36,12 @@ export default function DashboardPage() {
           </Link>
         </div>
         <Summary />
-        <div className="mt-8 ">
+        {/* <div className="mt-8 ">
           <p className="text-md font-semibold text-black mt-4 mb-4 text-wh">
               Tabel Pengeluaran
           </p>
           <DashboardTable/>
-        </div>
+        </div> */}
         <TransactionDashboard />
       </main>
     </div>
