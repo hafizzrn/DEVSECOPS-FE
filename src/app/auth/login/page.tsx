@@ -65,7 +65,7 @@ export default function Login() {
 
       if (res?.ok) {
         toast.success("Berhasil masuk!");
-        await router.push("/dashboard");
+        await router.replace("/dashboard");
       } else {
         throw res;
       }
