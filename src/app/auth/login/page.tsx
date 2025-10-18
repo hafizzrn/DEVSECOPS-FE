@@ -46,29 +46,32 @@ export default function Login() {
     resolver: zodResolver(LoginSchema),
   });
 
-  const session = useSession();
+  const { data: session, status, update } = useSession();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (session.status === "authenticated") {
-      router.push("/dashboard");
+    if (status === "authenticated") {
+      router.replace("/dashboard");
     }
-  }, [session]);
+  }, [status]);
 
   async function onSubmitHandler(data: LoginRequest) {
     try {
       const res = await signIn("credentials", {
         ...data,
         redirect: false,
-        callbackUrl: "/dashboard",
       });
 
       if (res?.ok) {
         toast.success("Berhasil masuk!");
-        await router.replace("/dashboard");
+        router.replace("/dashboard");
       } else {
         throw res;
       }
+      update();
+      router.replace("/dashboard");
+      window.location.href = "/dashboard";
+
     } catch (error) {
       toast.error((error as SignInResponse).error);
     }
