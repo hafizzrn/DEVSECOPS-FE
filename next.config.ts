@@ -21,7 +21,7 @@ const securityHeaders = [
       frame-ancestors 'none';
       base-uri 'self';
       form-action 'self';
-    `.replace(/\s{2,}/g, ' ').trim(),
+    `.replaceAll(/\s{2,}/g, ' ').trim(),
   },
 
   // Limit browser features – fixes [10063]
