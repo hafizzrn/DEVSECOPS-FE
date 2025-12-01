@@ -9,20 +9,20 @@ const securityHeaders = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
 
   // Basic CSP – fixes [10038] (tweak as needed)
-  {
-    key: 'Content-Security-Policy',
-    value: `
-      default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval';
-      style-src 'self' 'unsafe-inline';
-      img-src 'self' data: blob:;
-      font-src 'self' data:;
-      connect-src 'self';
-      frame-ancestors 'none';
-      base-uri 'self';
-      form-action 'self';
-    `.replaceAll(/\s{2,}/g, ' ').trim(),
-  },
+  // {
+  //   key: 'Content-Security-Policy',
+  //   value: `
+  //     default-src 'self';
+  //     script-src 'self' 'unsafe-inline' 'unsafe-eval';
+  //     style-src 'self' 'unsafe-inline';
+  //     img-src 'self' data: blob:;
+  //     font-src 'self' data:;
+  //     connect-src 'self';
+  //     frame-ancestors 'none';
+  //     base-uri 'self';
+  //     form-action 'self';
+  //   `.replaceAll(/\s{2,}/g, ' ').trim(),
+  // },
 
   // Limit browser features – fixes [10063]
   {
