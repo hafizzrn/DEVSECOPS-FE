@@ -38,7 +38,7 @@ pipeline {
             }
         }
 
-        stage('Semgrep SAST') {
+        stage('SAST - Semgrep') {
           steps {
             sh '''
                 echo workspace files...
